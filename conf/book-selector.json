@@ -1,0 +1,7 @@
+{
+	"numvotes":"3",
+	"firstvoteweight":"5",
+	"secondvoteweight":"3",
+	"thirdvoteweight":"1",
+  "booklistlocation":"bookList/book-list.txt"
+}
