@@ -253,8 +253,9 @@ func printBookVotes() {
 		}
 	}
 	for i := range ones {
-		fmt.Printf("%s%s:%s%s%s%s\n", ones[i], strings.Repeat(" ", maxOnes-len(ones[i])), strings.Repeat(" ",
-			maxTwos-len(twos[i])), twos[i], strings.Repeat(" ", maxThrees-len(threes[i])), threes[i])
+		fmt.Printf("%s%s:%s%s%s%s\n", ones[i], strings.Repeat(" ", maxOnes-len(ones[i])),
+			strings.Repeat(" ", maxTwos-len(twos[i])), twos[i], strings.Repeat(" ", maxThrees-len(threes[i])),
+			threes[i])
 	}
 
 }
