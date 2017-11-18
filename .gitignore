@@ -1,2 +1,5 @@
 conf/client_secret.json
 .idea/*
+meta-lint.sh
+book-selector
+projectFilesBackup/
