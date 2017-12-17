@@ -117,27 +117,27 @@ func readGoogleSheetsBooklist() []string {
 
 	// Prints the names and majors of students in a sample spreadsheet:
 	// https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-	spreadsheetId := "1mFAiopHeUfjyeMjVfDFxKGqSh19jBsTrSN5hEO6ppGs"
+	spreadsheetID := "1mFAiopHeUfjyeMjVfDFxKGqSh19jBsTrSN5hEO6ppGs"
 	readRange := "Suggestions!A2:E"
-	resp, err := srv.Spreadsheets.Values.Get(spreadsheetId, readRange).Do()
+	resp, err := srv.Spreadsheets.Values.Get(spreadsheetID, readRange).Do()
 	if err != nil {
 		log.Fatalf("Unable to retrieve data from sheet. %v", err)
 	}
 
 	if len(resp.Values) > 0 {
 		return formatGoogleSheetsBookList(resp.Values)
-	} else {
-		fmt.Print("No data found.")
 	}
+	fmt.Print("No data found.")
 	return []string{}
 }
 
 func formatGoogleSheetsBookList(i [][]interface{}) []string {
-	gsBookList := []string{}
+	var gsBookList []string
 	for _, row := range i {
 		// Print columns A and E, which correspond to indices 0 and 4.
 		bookStr := fmt.Sprintf("%s", row[1])
-		gsBookList = append(gsBookList, fmt.Sprintf("%s: %s", row[0], strings.Replace(bookStr, ":", "-", -1)))
+		gsBookList = append(gsBookList, fmt.Sprintf("%s: %s", row[0], strings.Replace(bookStr,
+			":", "-", -1)))
 	}
 	return gsBookList
 }
@@ -382,11 +382,11 @@ func printBookVotes() {
 	fmt.Print("\nVOTE TOTALS AND PERCENTAGES:\n")
 	var ones, twos, threes []string
 	for k := range voteMap {
-		ones = append(ones, fmt.Sprintf("%s", k))
+		ones = append(ones, k)
 		twos = append(twos, fmt.Sprintf(" %d out of %d votes,", voteMap[k], len(bookSlice)))
 		myFloat := 100.00 * float64(voteMap[k]) / float64(len(bookSlice))
-		threes = append(threes, fmt.Sprint(" "+strconv.FormatFloat(myFloat, 'g', 3, 64)+" chance of being "+
-			"selected"))
+		threes = append(threes, " "+strconv.FormatFloat(myFloat, 'g', 3, 64)+
+			" chance of being selected")
 
 	}
 	maxOnes := 0
