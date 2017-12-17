@@ -153,9 +153,7 @@ var (
 
 func main() {
 	// Clear the screen.
-	for i := 0; i < 100; i++ {
-		fmt.Println()
-	}
+	fmt.Print(strings.Repeat("\n", 100))
 
 	// Present a welcome message.
 	fmt.Print("\nWelcome to book selector!\n")
@@ -167,16 +165,20 @@ func main() {
 		if display {
 			printBookVotes()
 			fmt.Print("\nSelect one of the following options: \n\na/A: Add the selections of a voter. " +
-				"\nr/R: Read in the list of books. \nw/W: Update book list from Google Sheets. \nselect: Select a book randomly based on the " +
-				"given votes and finish program (select must be typed completely) \nx: Exit Book " +
-				"Selector.\n\nWhat would you like do next? \n")
+				"\nr/R: Read in the list of books. \nw/W: Update book list from Google Sheets. \nselect: Select a " +
+					"book randomly based on the given votes and finish program (select must be typed completely) " +
+						"\nx: Exit Book Selector.\n\nWhat would you like do next? \n")
 		}
 
 		// Receive selection and clean it.
 		text, _ = reader.ReadString('\n')
 		text = strings.ToUpper(text)
 		text = strings.Trim(text, " \n")
+
+		// Clears the screen.
 		fmt.Print(strings.Repeat("\n", 100))
+
+		// Switch on the given answer.
 		switch text {
 		case "A":
 			addVotes()
@@ -243,9 +245,8 @@ func addVotes() {
 	}
 
 	// Ask for, receive, and format the votes of this voter.
-	fmt.Printf("\nPlease enter %d votes seperated by commas. Your first three votes will receive a weighting of "+
-		"%d, %d, and %d respectively.\n\n", viper.GetInt("numvotes"), viper.GetInt("firstvoteweight"),
-		viper.GetInt("secondvoteweight"), viper.GetInt("thirdvoteweight"))
+	fmt.Printf("\nPlease enter %d votes seperated by commas. Your votes will be consiidered in your order of " +
+		"preference.\n\n", viper.GetInt("numvotes"))
 	t, _ := reader.ReadString('\n')
 	splits := strings.Split(t, ",")
 	var numbers []int
@@ -258,7 +259,7 @@ func addVotes() {
 		numbers = append(numbers, int(i))
 	}
 
-	// Check all the votes of the voter.
+	// Check all the votes of the voter to see if there are enough.
 	if len(numbers) > viper.GetInt("numvotes") {
 		fmt.Printf("Error: There were %d votes when we were expecting %d\n", len(numbers),
 			viper.GetInt("numvotes"))
